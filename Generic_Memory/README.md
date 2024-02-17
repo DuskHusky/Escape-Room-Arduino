@@ -1,6 +1,13 @@
 # Generic Memory Puzzle
 
-The **only** files that need to ba changed are *Configuration.h* and *Custom_Functions.h*.
+A generic memory puzzle on arduino for escape rooms. Has plenty of customisability so it can be used in a variety of situations.
+The **only** files that need to be changed are *Configuration.h* and *Custom_Functions.h*.
+
+## Installation
+
+****To run this program, you will need the ERBasics arduino library that i've programmed which can be found [here](https://github.com/DuskHusky/Escape-Room-Arduino/tree/main/ERBasics).***
+
+Once you've installed the library, just download the *Generic_Memory.zip* file to your Arduino sketchbook folder and unzip it. You can then change the it's settings to suit your needs (see following sections).
 
 # Configuration
 
