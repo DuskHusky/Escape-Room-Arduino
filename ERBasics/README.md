@@ -1,5 +1,5 @@
 # ERBasics
-***Escape Room Basics*** (or ERBasics for short) is a library containing useful classes and functions for programming puzzles on arduino. (See [Documentation.md](https://github.com/DuskHusky/Escape-Room-Arduino/edit/main/ERBasics/Documentation.md) for information about using the library.
+***Escape Room Basics*** (or ERBasics for short) is a library containing useful classes and functions for programming puzzles on arduino. (See [Documentation.md](https://github.com/DuskHusky/Escape-Room-Arduino/blob/main/ERBasics/Documentation.md) for information about using the library.
 
 ### Dependencies
 
