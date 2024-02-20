@@ -1,72 +1,5 @@
 #include "ERBasics.h"
 
-// ---- Class: _Time -----------------------------------
-
-void _Time::update() {
-	d_time = millis() - prev_millis;
-	prev_millis = millis();
-	
-	for (int i = 0; i < MAX_COROUTINES; i++) {
-		if (coroutines[i] != nullptr) {
-			coroutines[i](d_time);
-			if (cr_ends[i] > 0 && millis() > cr_ends[i]) {
-				end_coroutine(i);
-			}
-		}
-	}
-}
-
-long _Time::delta_time() {
-	return d_time;
-}
-
-void _Time::start_coroutine(Coroutine function, long duration = 0) {
-	int n = -1;
-	for (int i = MAX_COROUTINES - 1; i >= 0; i--) {
-		if (coroutines[i] == function) {
-			Serial.println("Couldn't start coroutine. Coroutine already exists.");
-			return;
-		}
-		else if (coroutines[i] == nullptr) {
-			n = i;
-		}
-	}
-	if (n < 0) {
-		Serial.println("Couldn't start coroutine. Coroutine limit exceeded.");
-	}
-	else {
-		coroutines[n] = function;
-		cr_ends[n] = (duration > 0) ? millis() + duration : 0;
-	}
-}
-
-void _Time::end_coroutine(Coroutine function) {
-	for (int i = 0; i < MAX_COROUTINES; i++) {
-		if (coroutines[i] == function) {
-			coroutines[i] = nullptr;
-			cr_ends[i] = 0;
-			if (on_coroutine_end != nullptr) {
-				on_coroutine_end(function);
-			}
-			return;
-		}
-	}
-}
-void _Time::end_coroutine(int index) {
-	Coroutine func = coroutines[index];
-	coroutines[index] = nullptr;
-	cr_ends[index] = 0;
-	if (on_coroutine_end != nullptr) {
-		on_coroutine_end(func);
-	}
-}
-
-void _Time::attach_cr_end_func(void(*func)(Coroutine)) {
-	on_coroutine_end = func;
-}
-
-_Time Time;
-
 namespace ERBasics {
 	unsigned int time_cycle(unsigned long t, unsigned long interval) {
 		return t / interval;
@@ -74,9 +7,12 @@ namespace ERBasics {
 	unsigned int time_cycle(unsigned long t, unsigned long interval, unsigned int overflow) {
 		return (t / interval) % overflow;
 	}
-}
 
-// ---- Class: _Time -----------------------------------
+	void throw_error(char* err_str, bool stop) {
+		Serial.println(err_str);
+		if (stop) while (true);
+	}
+}
 
 // ---- Class: Button ----------------------------------
 

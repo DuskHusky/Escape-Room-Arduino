@@ -6,34 +6,17 @@
 #include "EREnumerations.h"
 
 typedef void(*VoidCallback) ();
-typedef void(*Coroutine) (long);
-
-#ifndef MAX_COROUTINES
-#define MAX_COROUTINES 1
-#endif
-
-class _Time {
-public:
-	void update();
-	long delta_time();
-	void start_coroutine(Coroutine function, long duration = 0);
-	void end_coroutine(Coroutine function);
-	void end_coroutine(int index);
-	void attach_cr_end_func(void(*func)(Coroutine));
-
-private:
-	long prev_millis = 0, d_time = 0;
-	unsigned long cr_ends[MAX_COROUTINES];
-	Coroutine coroutines[MAX_COROUTINES];
-	void(*on_coroutine_end)(Coroutine);
-};
-
-extern _Time Time;
 
 namespace ERBasics {
 	unsigned int time_cycle(unsigned long t, unsigned long interval);
 	unsigned int time_cycle(unsigned long t, unsigned long interval, unsigned int overflow);
+
+	void throw_error(char* err_str, bool stop);
 }
+
+#ifndef ER_NO_TIME
+#include "ERTime.h"
+#endif
 
 class Button {
 public:
